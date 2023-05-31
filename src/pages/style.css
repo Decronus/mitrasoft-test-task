@@ -1,0 +1,36 @@
+.not-found-page,
+.people-page {
+    width: 100%;
+}
+
+.main-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-page-logged {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.people-page-users-wrap {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.account-page-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.account-page-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
