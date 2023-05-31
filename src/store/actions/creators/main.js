@@ -1,6 +1,20 @@
-import { FETCH_POSTS } from "../types/main";
+import { FETCH_POSTS, FETCH_COMMENTS, SET_POSTS, SET_COMMENTS } from "../types/main";
 
-export const fetchPosts = (posts) => ({
+export const fetchPostsCreator = () => ({
     type: FETCH_POSTS,
-    payload: posts,
+});
+
+export const setPostsCreator = (payload) => ({
+    type: SET_POSTS,
+    payload,
+});
+
+export const fetchCommentsCreator = (payload) => ({
+    type: FETCH_COMMENTS,
+    payload,
+});
+
+export const setCommentsCreator = (payload) => ({
+    type: SET_COMMENTS,
+    payload,
 });

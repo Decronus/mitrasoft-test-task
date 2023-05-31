@@ -6,7 +6,6 @@ export const AppRoutes = ({ user, setUser }) => {
     return (
         <Routes>
             <Route path="/" element={<Main user={user} setUser={setUser} />} errorElement={<NotFound />} />
-
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

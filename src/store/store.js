@@ -1,11 +1,11 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import usersReducer from "./reducers/usersReducer";
+import mainReducer from "./reducers/mainReducer";
 import rootSaga from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const rootReducer = combineReducers({ usersReducer });
+const rootReducer = combineReducers({ mainReducer });
 
 export const store = configureStore({
     reducer: {
