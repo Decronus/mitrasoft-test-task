@@ -1,7 +1,7 @@
 import { takeEvery, put, call, all, takeLeading } from "redux-saga/effects";
-import { fetchPosts, fetchPostComments } from "../../api/api";
-import { setPostsCreator, setCommentsCreator } from "../actions/creators/main";
-import { FETCH_POSTS, FETCH_COMMENTS } from "../actions/types/main";
+import { fetchPosts, fetchPostComments, fetchUser } from "../../api/api";
+import { setPostsCreator, setCommentsCreator, setUserCreator } from "../actions/creators/main";
+import { FETCH_POSTS, FETCH_COMMENTS, FETCH_USER } from "../actions/types/main";
 
 const delay = (ms) =>
     new Promise((res) => {
@@ -30,6 +30,18 @@ function* watcherComments() {
     yield takeLeading(FETCH_COMMENTS, workerComments);
 }
 
+function* workerUser({ payload }) {
+    yield delay(500);
+    const { id } = payload;
+    const { data: user } = yield call(fetchUser, id);
+    const userPayload = { user };
+    yield put(setUserCreator(userPayload));
+}
+
+function* watcherUser() {
+    yield takeEvery(FETCH_USER, workerUser);
+}
+
 export default function* rootSaga() {
-    yield all([watcherPosts(), watcherComments()]);
+    yield all([watcherPosts(), watcherComments(), watcherUser()]);
 }

@@ -7,3 +7,7 @@ export function fetchPosts() {
 export function fetchPostComments(id) {
     return axiosInstance.get(`posts/${id}/comments`);
 }
+
+export function fetchUser(id) {
+    return axiosInstance.get(`users/${id}`);
+}

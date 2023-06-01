@@ -1,24 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creators/main";
+import { fetchPostsCreator, fetchCommentsCreator, fetchUserCreator } from "../store/actions/creators/main";
 import { useEffect } from "react";
 import PostCard from "../components/post-card/PostCard";
 import { v4 as uuidv4 } from "uuid";
 import { Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Main = () => {
+const User = () => {
+    const params = useParams();
+    const { id: userId } = params;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const posts = useSelector((state) => state.mainReducer.posts);
+    const userPosts = posts.filter((post) => post.userId === +userId);
+    console.log(userPosts);
 
     useEffect(() => {
-        dispatch(fetchPostsCreator());
-    }, []);
+        if (!posts.length) {
+            dispatch(fetchPostsCreator());
+        }
+        dispatch(fetchUserCreator({ id: userId }));
+    }, [userId]);
 
     return (
-        <div className="main-page">
-            {posts.length ? (
-                posts.map((post) => (
+        <div className="user-page">
+            {userPosts.length ? (
+                userPosts.map((post) => (
                     <PostCard
                         key={uuidv4()}
                         post={post}
@@ -33,4 +40,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default User;

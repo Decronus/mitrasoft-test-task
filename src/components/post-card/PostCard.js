@@ -5,20 +5,20 @@ import { Button, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import CommentCard from "../comment-card/CommentCard";
 
-const PostCard = ({ post, onClick }) => {
+const PostCard = ({ post, fetchComments, navigateToUser }) => {
     const [commentsVisible, setCommentsVisible] = useState(false);
     const commentsState = useSelector((state) => state.mainReducer.comments);
     const comments = commentsState.find((el) => post.id === el.postId);
 
     const loadComments = () => {
-        !comments && onClick();
+        !comments && fetchComments();
         setCommentsVisible(!commentsVisible);
     };
 
     return (
         <div className="post-wrap">
             <div className="post-header">
-                <div onClick={onClick}>
+                <div onClick={navigateToUser}>
                     <div className="post-avatar" />
                 </div>
                 <h3>{post.title}</h3>

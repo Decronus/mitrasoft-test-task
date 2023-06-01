@@ -1,8 +1,9 @@
-import { SET_POSTS, SET_COMMENTS } from "../actions/types/main";
+import { SET_POSTS, SET_COMMENTS, SET_USER } from "../actions/types/main";
 
 const initialState = {
     posts: [],
     comments: [],
+    currentObservedUser: null,
 };
 
 export default function mainReducer(state = initialState, { type, payload }) {
@@ -29,22 +30,15 @@ export default function mainReducer(state = initialState, { type, payload }) {
                 };
             }
         }
-        // case SET_COMMENTS: {
-        //     const { id, comments } = payload;
-        //     const updatedPosts = state.posts.map((post) => {
-        //         if (post.id === id) {
-        //             return {
-        //                 ...post,
-        //                 comments: comments,
-        //             };
-        //         }
-        //         return post;
-        //     });
-        //     return {
-        //         ...state,
-        //         posts: updatedPosts,
-        //     };
-        // }
+        case SET_USER: {
+            console.log(payload);
+            const { user } = payload;
+            return {
+                ...state,
+                currentObservedUser: user,
+            };
+        }
+
         default:
             return state;
     }
