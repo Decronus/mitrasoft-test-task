@@ -4,6 +4,10 @@
 
 React, Redux, Redux Saga, React Router, React Bootstrap, Javascript, Axios
 
+## Ссылка на проект
+
+http://ce76488-wordpress-tw2er.tw1.ru/user/1
+
 ## Инструкция по запуску проекта
 
 1. Склонировать проект из репозитория на компьютер.
