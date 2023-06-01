@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Button, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import CommentCard from "../comment-card/CommentCard";
+import UserAvatar from "../user-avatar/UserAvatar";
 
 const PostCard = ({ post, fetchComments, navigateToUser }) => {
     const [commentsVisible, setCommentsVisible] = useState(false);
@@ -18,9 +19,7 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
     return (
         <div className="post-wrap">
             <div className="post-header">
-                <div onClick={navigateToUser}>
-                    <div className="post-avatar" />
-                </div>
+                <UserAvatar navigateToUser={navigateToUser} />
                 <h3>{post.title}</h3>
             </div>
             <p>{post.body}</p>

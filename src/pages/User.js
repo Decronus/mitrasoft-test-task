@@ -7,13 +7,12 @@ import { Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const User = () => {
-    const params = useParams();
-    const { id: userId } = params;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const params = useParams();
+    const { id: userId } = params;
     const posts = useSelector((state) => state.mainReducer.posts);
     const userPosts = posts.filter((post) => post.userId === +userId);
-    console.log(userPosts);
 
     useEffect(() => {
         if (!posts.length) {
