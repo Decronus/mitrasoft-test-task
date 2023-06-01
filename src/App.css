@@ -5,6 +5,9 @@
 }
 
 .App {
-    padding: 60px 20px;
     text-align: left;
+}
+
+.content {
+    padding: 26px 20px;
 }

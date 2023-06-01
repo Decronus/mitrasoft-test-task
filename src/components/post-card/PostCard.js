@@ -25,7 +25,7 @@ const PostCard = ({ post, onClick }) => {
             </div>
             <p>{post.body}</p>
 
-            <Button variant="primary" onClick={loadComments}>
+            <Button variant="outline-primary" onClick={loadComments}>
                 {commentsVisible ? "Скрыть комментарии" : "Комментарии"}
             </Button>
 
@@ -37,7 +37,7 @@ const PostCard = ({ post, onClick }) => {
                         ))}
                     </div>
                 ) : (
-                    <Spinner animation="border" />
+                    <Spinner animation="border" variant="primary" />
                 ))}
         </div>
     );

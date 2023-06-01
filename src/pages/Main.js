@@ -3,6 +3,7 @@ import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creato
 import { useEffect } from "react";
 import PostCard from "../components/post-card/PostCard";
 import { v4 as uuidv4 } from "uuid";
+import { Spinner } from "react-bootstrap";
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -14,9 +15,17 @@ const Main = () => {
 
     return (
         <div className="main-page">
-            {posts?.map((post) => (
-                <PostCard key={uuidv4()} post={post} onClick={() => dispatch(fetchCommentsCreator({ id: post.id }))} />
-            ))}
+            {posts.length ? (
+                posts.map((post) => (
+                    <PostCard
+                        key={uuidv4()}
+                        post={post}
+                        onClick={() => dispatch(fetchCommentsCreator({ id: post.id }))}
+                    />
+                ))
+            ) : (
+                <Spinner animation="border" variant="primary" />
+            )}
         </div>
     );
 };

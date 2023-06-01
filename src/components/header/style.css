@@ -1,0 +1,12 @@
+.header {
+    width: 100%;
+    background: #f3f3f3;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.dropdown-toggle.nav-link::after {
+    display: none;
+}

@@ -9,6 +9,7 @@ const delay = (ms) =>
     });
 
 function* workerPosts() {
+    yield delay(500);
     const posts = yield call(fetchPosts);
     yield put(setPostsCreator(posts.data));
 }

@@ -1,0 +1,15 @@
+.menu-profile {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-right: 6px;
+}
+
+.menu-profile-avatar {
+    background: url("../../images/my-avatar.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 42px;
+    width: 42px;
+    border-radius: 100px;
+}
