@@ -5,3 +5,15 @@
 .h3-title {
     margin-bottom: 1rem;
 }
+
+.main-page-filters {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .main-page-filters {
+        flex-direction: column;
+        gap: 0;
+    }
+}

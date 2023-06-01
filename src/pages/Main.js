@@ -18,18 +18,39 @@ const Main = () => {
     const [computedPosts, setСomputedPosts] = useState(posts);
     const searchInputRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [sortMethod, setSortMethod] = useState(undefined);
+
+    const onPressEnterSearch = (event) => {
+        if (event.key === "Enter") {
+            setSearchQuery(searchInputRef.current.value);
+        }
+    };
 
     const computePostsFunc = () => {
-        if (!searchQuery) {
-            setСomputedPosts(posts);
+        let computedPosts = [...posts];
+
+        if (sortMethod) {
+            if (sortMethod === "ascending") {
+                computedPosts.sort((prev, next) => prev.title.localeCompare(next.title));
+            } else if (sortMethod === "descending") {
+                computedPosts.sort((prev, next) => prev.title.localeCompare(next.title)).reverse();
+            } else {
+                computedPosts = [...posts];
+            }
         }
-        const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        if (!searchQuery) {
+            setСomputedPosts(computedPosts);
+        }
+        const filteredPosts = computedPosts.filter((post) =>
+            post.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         setСomputedPosts(filteredPosts);
     };
 
     useEffect(() => {
         computePostsFunc();
-    }, [searchQuery, posts]);
+    }, [searchQuery, posts, sortMethod]);
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -54,21 +75,34 @@ const Main = () => {
     return (
         <div className="main-page">
             <h1 className="h1-title">Список постов</h1>
-            <InputGroup className="mb-3">
-                <Form.Control
-                    placeholder="Поиск по заголовкам"
-                    aria-label="Поиск по заголовкам"
-                    aria-describedby="basic-addon"
-                    ref={searchInputRef}
-                />
-                <Button
-                    variant="outline-secondary"
-                    id="button-addon"
-                    onClick={() => setSearchQuery(searchInputRef.current.value)}
-                >
-                    Поиск
-                </Button>
-            </InputGroup>
+            <div className="main-page-filters">
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        placeholder="Поиск по заголовкам"
+                        aria-label="Поиск по заголовкам"
+                        aria-describedby="basic-addon"
+                        onKeyUp={onPressEnterSearch}
+                        ref={searchInputRef}
+                    />
+                    <Button
+                        variant="outline-secondary"
+                        id="button-addon"
+                        onClick={() => setSearchQuery(searchInputRef.current.value)}
+                    >
+                        Поиск
+                    </Button>
+                </InputGroup>
+                <InputGroup className="mb-3">
+                    <Form.Select
+                        aria-label="Сортировка по заголовкам"
+                        onChange={(event) => setSortMethod(event.target.value)}
+                    >
+                        <option>Сортировка по заголовкам</option>
+                        <option value="ascending">A-Z, A-Я</option>
+                        <option value="descending">Z-A, Я-А</option>
+                    </Form.Select>
+                </InputGroup>
+            </div>
 
             {posts.length ? renderPostsPage() : <Spinner animation="border" variant="primary" />}
 
