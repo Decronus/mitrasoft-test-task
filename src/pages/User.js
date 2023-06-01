@@ -6,6 +6,7 @@ import PostCard from "../components/post-card/PostCard";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import UserCard from "../components/user-card/UserCard";
+import { Button } from "react-bootstrap";
 
 const User = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,9 @@ const User = () => {
 
     return (
         <div className="user-page">
+            <Button type="primary" style={{ marginBottom: "2rem" }} onClick={() => navigate("/")}>
+                Назад
+            </Button>
             <h1 className="h1-title">Подробности о пользователе</h1>
             <hr />
             <UserCard user={user} />
