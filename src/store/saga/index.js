@@ -1,7 +1,7 @@
 import { takeEvery, put, call, all, takeLeading } from "redux-saga/effects";
 import { fetchPosts, fetchPostComments, fetchUser } from "../../api/api";
 import { setPostsCreator, setCommentsCreator, setUserCreator } from "../actions/creators/main";
-import { setPostsErrorCreator } from "../actions/creators/errors";
+import { setPostsErrorCreator, setCommentsErrorCreator, setUserErrorCreator } from "../actions/creators/errors";
 import { FETCH_POSTS, FETCH_COMMENTS, FETCH_USER } from "../actions/types/main";
 
 const delay = (ms) =>
@@ -14,8 +14,9 @@ function* workerPosts() {
         yield delay(500);
         const posts = yield call(fetchPosts);
         yield put(setPostsCreator(posts.data));
+        yield put(setPostsErrorCreator(""));
     } catch {
-        yield put(setPostsErrorCreator());
+        yield put(setPostsErrorCreator("Ошибка при загрузке постов"));
     }
 }
 
@@ -24,11 +25,16 @@ function* watcherPosts() {
 }
 
 function* workerComments({ payload }) {
-    yield delay(500);
-    const { id } = payload;
-    const { data: comments } = yield call(fetchPostComments, id);
-    const commentsPayload = { id, comments };
-    yield put(setCommentsCreator(commentsPayload));
+    try {
+        yield delay(500);
+        const { id } = payload;
+        const { data: comments } = yield call(fetchPostComments, id);
+        const commentsPayload = { id, comments };
+        yield put(setCommentsCreator(commentsPayload));
+        yield put(setCommentsErrorCreator(""));
+    } catch {
+        yield put(setCommentsErrorCreator("Ошибка при загрузке комментариев"));
+    }
 }
 
 function* watcherComments() {
@@ -36,11 +42,16 @@ function* watcherComments() {
 }
 
 function* workerUser({ payload }) {
-    yield delay(500);
-    const { id } = payload;
-    const { data: user } = yield call(fetchUser, id);
-    const userPayload = { user };
-    yield put(setUserCreator(userPayload));
+    try {
+        yield delay(500);
+        const { id } = payload;
+        const { data: user } = yield call(fetchUser, id);
+        const userPayload = { user };
+        yield put(setUserCreator(userPayload));
+        yield put(setUserErrorCreator(""));
+    } catch {
+        yield put(setUserErrorCreator("Ошибка при загрузке пользователя"));
+    }
 }
 
 function* watcherUser() {

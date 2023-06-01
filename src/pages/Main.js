@@ -10,6 +10,7 @@ const Main = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const posts = useSelector((state) => state.mainReducer.posts);
+    const postsError = useSelector((state) => state.errorsReducer.postsError);
 
     useEffect(() => {
         dispatch(fetchPostsCreator());
@@ -32,25 +33,27 @@ const Main = () => {
     };
 
     const computePostsFunc = () => {
-        let computedPosts = [...posts];
+        if (posts) {
+            let computedPosts = [...posts];
 
-        if (sortMethod) {
-            if (sortMethod === "ascending") {
-                computedPosts.sort((prev, next) => prev.title.localeCompare(next.title));
-            } else if (sortMethod === "descending") {
-                computedPosts.sort((prev, next) => prev.title.localeCompare(next.title)).reverse();
-            } else {
-                computedPosts = [...posts];
+            if (sortMethod) {
+                if (sortMethod === "ascending") {
+                    computedPosts.sort((prev, next) => prev.title.localeCompare(next.title));
+                } else if (sortMethod === "descending") {
+                    computedPosts.sort((prev, next) => prev.title.localeCompare(next.title)).reverse();
+                } else {
+                    computedPosts = [...posts];
+                }
             }
-        }
 
-        if (!searchQuery) {
-            setСomputedPosts(computedPosts);
+            if (!searchQuery) {
+                setСomputedPosts(computedPosts);
+            }
+            const filteredPosts = computedPosts.filter((post) =>
+                post.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setСomputedPosts(filteredPosts);
         }
-        const filteredPosts = computedPosts.filter((post) =>
-            post.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setСomputedPosts(filteredPosts);
     };
 
     useEffect(() => {
@@ -59,26 +62,34 @@ const Main = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const totalItems = computedPosts.length;
+    const totalItems = computedPosts?.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const renderPostsPage = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const postsToRender = computedPosts.slice(startIndex, endIndex);
+        const postsToRender = computedPosts?.slice(startIndex, endIndex);
 
-        if (!postsToRender.length) {
+        if (postsError) {
+            return <p>{postsError}</p>;
+        }
+
+        if (posts && !postsToRender?.length) {
             return <p>Посты не найдены</p>;
         }
 
-        return postsToRender.map((post) => (
-            <PostCard
-                key={post.id}
-                post={post}
-                navigateToUser={() => navigate(`/user/${post.userId}`)}
-                fetchComments={() => dispatch(fetchCommentsCreator({ id: post.id }))}
-            />
-        ));
+        return postsToRender?.length ? (
+            postsToRender.map((post) => (
+                <PostCard
+                    key={post.id}
+                    post={post}
+                    navigateToUser={() => navigate(`/user/${post.userId}`)}
+                    fetchComments={() => dispatch(fetchCommentsCreator({ id: post.id }))}
+                />
+            ))
+        ) : (
+            <Spinner animation="border" variant="primary" />
+        );
     };
 
     return (
@@ -117,7 +128,7 @@ const Main = () => {
                 </InputGroup>
             </div>
 
-            {posts.length ? renderPostsPage() : <Spinner animation="border" variant="primary" />}
+            {renderPostsPage()}
 
             <Pagination>
                 {Array.from({ length: totalPages }, (_, index) => (

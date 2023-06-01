@@ -8,7 +8,9 @@ import UserAvatar from "../user-avatar/UserAvatar";
 const PostCard = ({ post, fetchComments, navigateToUser }) => {
     const [commentsVisible, setCommentsVisible] = useState(false);
     const commentsState = useSelector((state) => state.mainReducer.comments);
-    const comments = commentsState.find((el) => post.id === el.postId);
+    const comments = commentsState?.find((el) => post.id === el.postId);
+
+    const commentsError = useSelector((state) => state.errorsReducer.commentsError);
 
     const loadComments = () => {
         !comments && fetchComments();
@@ -16,6 +18,10 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
     };
 
     const renderComments = () => {
+        if (commentsVisible && commentsError) {
+            return <p>{commentsError}</p>;
+        }
+
         if (commentsVisible && comments && !comments?.comments.length) {
             return <p>Комментариев нет</p>;
         }
@@ -46,17 +52,6 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
             </Button>
 
             {renderComments()}
-
-            {/* {commentsVisible &&
-                (comments ? (
-                    <div className="comments-block">
-                        {comments?.comments.map((comment) => (
-                            <CommentCard key={comment.id} comment={comment} />
-                        ))}
-                    </div>
-                ) : (
-                    <Spinner animation="border" variant="primary" />
-                ))} */}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import { SET_POSTS, SET_COMMENTS, SET_USER } from "../actions/types/main";
 
 const initialState = {
-    posts: [],
+    posts: null,
     comments: [],
     currentObservedUser: null,
 };
