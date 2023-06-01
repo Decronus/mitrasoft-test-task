@@ -1,11 +1,10 @@
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creators/main";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PostCard from "../components/post-card/PostCard";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Form, Pagination, InputGroup, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Pagination } from "react-bootstrap";
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -16,15 +15,31 @@ const Main = () => {
         dispatch(fetchPostsCreator());
     }, []);
 
+    const [computedPosts, setСomputedPosts] = useState(posts);
+    const searchInputRef = useRef(null);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const computePostsFunc = () => {
+        if (!searchQuery) {
+            setСomputedPosts(posts);
+        }
+        const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        setСomputedPosts(filteredPosts);
+    };
+
+    useEffect(() => {
+        computePostsFunc();
+    }, [searchQuery, posts]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const totalItems = posts.length;
+    const totalItems = computedPosts.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const renderPostsPage = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const postsToRender = posts.slice(startIndex, endIndex);
+        const postsToRender = computedPosts.slice(startIndex, endIndex);
 
         return postsToRender.map((post) => (
             <PostCard
@@ -39,6 +54,22 @@ const Main = () => {
     return (
         <div className="main-page">
             <h1 className="h1-title">Список постов</h1>
+            <InputGroup className="mb-3">
+                <Form.Control
+                    placeholder="Поиск по заголовкам"
+                    aria-label="Поиск по заголовкам"
+                    aria-describedby="basic-addon"
+                    ref={searchInputRef}
+                />
+                <Button
+                    variant="outline-secondary"
+                    id="button-addon"
+                    onClick={() => setSearchQuery(searchInputRef.current.value)}
+                >
+                    Поиск
+                </Button>
+            </InputGroup>
+
             {posts.length ? renderPostsPage() : <Spinner animation="border" variant="primary" />}
 
             <Pagination>
