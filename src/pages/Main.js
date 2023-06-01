@@ -1,3 +1,4 @@
+import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creators/main";
 import { useEffect } from "react";
@@ -17,6 +18,7 @@ const Main = () => {
 
     return (
         <div className="main-page">
+            <h1 className="h1-title">Список постов</h1>
             {posts.length ? (
                 posts.map((post) => (
                     <PostCard

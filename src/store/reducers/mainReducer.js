@@ -31,7 +31,6 @@ export default function mainReducer(state = initialState, { type, payload }) {
             }
         }
         case SET_USER: {
-            console.log(payload);
             const { user } = payload;
             return {
                 ...state,

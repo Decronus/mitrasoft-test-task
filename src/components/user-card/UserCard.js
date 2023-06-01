@@ -1,13 +1,19 @@
+import { Spinner } from "react-bootstrap";
+import UserAvatar from "../user-avatar/UserAvatar";
 import "./style.css";
 
-const UserCard = () => {
+const UserCard = ({ user }) => {
     return (
-        <div className="menu-profile">
-            <div className="menu-profile-avatar" />
-            <div className="menu-profile-text">
-                <div> Алексей Зотин</div>
-                <div className="menu-profile-email">al.zotin@mail.ru</div>
-            </div>
+        <div className="user-card">
+            <UserAvatar />
+            {user ? (
+                <div className="user-card-text">
+                    <div>{user?.name}</div>
+                    <div className="user-card-email">{user?.email}</div>
+                </div>
+            ) : (
+                <div>Загрузка...</div>
+            )}
         </div>
     );
 };

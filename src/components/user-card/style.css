@@ -1,11 +1,10 @@
-.menu-profile {
+.user-card {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
-    margin-right: 6px;
 }
 
-.menu-profile-avatar {
+.user-card {
     background: url("../../images/my-avatar.jpg");
     background-size: cover;
     background-repeat: no-repeat;
