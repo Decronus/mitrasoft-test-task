@@ -18,6 +18,7 @@ function* watcherPosts() {
 }
 
 function* workerComments({ payload }) {
+    yield delay(500);
     const { id } = payload;
     const { data: comments } = yield call(fetchPostComments, id);
     const commentsPayload = { id, comments };

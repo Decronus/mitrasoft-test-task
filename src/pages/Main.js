@@ -7,10 +7,15 @@ import { v4 as uuidv4 } from "uuid";
 const Main = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.mainReducer.posts);
-    console.log(posts);
+
+    const handleFetchComments = (id) => {
+        dispatch(fetchCommentsCreator({ id }));
+        console.log("User id:", id);
+    };
 
     useEffect(() => {
         dispatch(fetchPostsCreator());
+        console.log("useeffect");
     }, []);
 
     return (
@@ -20,7 +25,7 @@ const Main = () => {
             <button onClick={() => dispatch(fetchCommentsCreator({ id: 2 }))}>Click me!</button> */}
 
             {posts?.map((post) => (
-                <PostCard title={post.title} body={post.body} key={uuidv4()} />
+                <PostCard key={uuidv4()} post={post} onClick={() => handleFetchComments(post.userId)} />
             ))}
         </div>
     );
