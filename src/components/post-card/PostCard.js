@@ -1,15 +1,16 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./style.css";
-import { Accordion } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const PostCard = ({ post, onClick }) => {
     const [commentsVisible, setCommentsVisible] = useState(false);
-    const accordionRef = useRef(null);
+    const commentsState = useSelector((state) => state.mainReducer.comments);
+    const comments = commentsState.find((el) => post.id === el.postId);
 
     const loadComments = () => {
-        !post?.comments && onClick();
+        !comments && onClick();
         setCommentsVisible(!commentsVisible);
     };
 
@@ -23,24 +24,16 @@ const PostCard = ({ post, onClick }) => {
                 <h3>{post.title}</h3>
             </div>
             <p>{post.body}</p>
-            <Button variant="primary" onClick={() => loadComments()}>
+
+            <Button variant="primary" onClick={loadComments}>
                 {commentsVisible ? "Скрыть комментарии" : "Комментарии"}
             </Button>
-
-            {commentsVisible && post?.comments?.map((comment) => <p key={uuidv4()}>{comment.body}</p>)}
-
-            {/* <Accordion>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header onClick={() => !post?.comments && loadComments()} ref={accordionRef}>
-                        Комментарии
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        {post?.comments?.map((comment) => (
-                            <p key={uuidv4()}>{comment.body}</p>
-                        ))}
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion> */}
+            {commentsVisible &&
+                (comments ? (
+                    comments?.comments.map((comment) => <p key={uuidv4()}>{comment.body}</p>)
+                ) : (
+                    <Spinner animation="border" />
+                ))}
         </div>
     );
 };

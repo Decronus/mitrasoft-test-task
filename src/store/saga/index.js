@@ -1,4 +1,4 @@
-import { takeEvery, put, call, all } from "redux-saga/effects";
+import { takeEvery, put, call, all, takeLeading } from "redux-saga/effects";
 import { fetchPosts, fetchPostComments } from "../../api/api";
 import { setPostsCreator, setCommentsCreator } from "../actions/creators/main";
 import { FETCH_POSTS, FETCH_COMMENTS } from "../actions/types/main";
@@ -18,6 +18,7 @@ function* watcherPosts() {
 }
 
 function* workerComments({ payload }) {
+    yield delay(500);
     const { id } = payload;
     const { data: comments } = yield call(fetchPostComments, id);
     const commentsPayload = { id, comments };
@@ -25,7 +26,7 @@ function* workerComments({ payload }) {
 }
 
 function* watcherComments() {
-    yield takeEvery(FETCH_COMMENTS, workerComments);
+    yield takeLeading(FETCH_COMMENTS, workerComments);
 }
 
 export default function* rootSaga() {
