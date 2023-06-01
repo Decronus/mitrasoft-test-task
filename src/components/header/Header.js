@@ -15,7 +15,7 @@ const Header = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => navigate("/")}>Список постов</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate("about-me")}>Обо мне</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("about")}>Обо мне</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item style={{ pointerEvents: "none" }}>
                         <MenuProfile />
