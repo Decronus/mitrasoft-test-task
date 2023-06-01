@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creators/main";
 import { useEffect } from "react";
 import PostCard from "../components/post-card/PostCard";
-import { v4 as uuidv4 } from "uuid";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +21,7 @@ const Main = () => {
             {posts.length ? (
                 posts.map((post) => (
                     <PostCard
-                        key={uuidv4()}
+                        key={post.id}
                         post={post}
                         navigateToUser={() => navigate(`/user/${post.userId}`)}
                         fetchComments={() => dispatch(fetchCommentsCreator({ id: post.id }))}

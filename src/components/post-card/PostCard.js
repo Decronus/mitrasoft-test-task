@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./style.css";
-import { v4 as uuidv4 } from "uuid";
 import { Button, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import CommentCard from "../comment-card/CommentCard";
@@ -32,7 +31,7 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
                 (comments ? (
                     <div className="comments-block">
                         {comments?.comments.map((comment) => (
-                            <CommentCard key={uuidv4()} comment={comment} />
+                            <CommentCard key={comment.id} comment={comment} />
                         ))}
                     </div>
                 ) : (

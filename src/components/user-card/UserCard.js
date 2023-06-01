@@ -1,4 +1,3 @@
-import { Spinner } from "react-bootstrap";
 import UserAvatar from "../user-avatar/UserAvatar";
 import "./style.css";
 
