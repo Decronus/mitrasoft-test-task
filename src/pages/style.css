@@ -11,6 +11,27 @@
     gap: 10px;
 }
 
+.main-page-search-input-wrap {
+    display: flex;
+    position: relative;
+}
+
+.main-page-input-button {
+    display: flex;
+}
+
+.search-input-close-icon {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.search-input-close-icon:hover {
+    opacity: 1;
+}
+
 @media (max-width: 600px) {
     .main-page-filters {
         flex-direction: column;

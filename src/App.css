@@ -11,3 +11,7 @@
 .content {
     padding: 26px 20px;
 }
+
+.pagination {
+    flex-wrap: wrap;
+}

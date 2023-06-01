@@ -15,6 +15,24 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
         setCommentsVisible(!commentsVisible);
     };
 
+    const renderComments = () => {
+        if (commentsVisible && comments && !comments?.comments.length) {
+            return <p>Комментариев нет</p>;
+        }
+
+        if (commentsVisible) {
+            return comments?.comments.length ? (
+                <div className="comments-block">
+                    {comments?.comments.map((comment) => (
+                        <CommentCard key={comment.id} comment={comment} />
+                    ))}
+                </div>
+            ) : (
+                <Spinner animation="border" variant="primary" />
+            );
+        }
+    };
+
     return (
         <div className="post-wrap">
             <div className="post-header">
@@ -27,7 +45,9 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
                 {commentsVisible ? "Скрыть комментарии" : "Комментарии"}
             </Button>
 
-            {commentsVisible &&
+            {renderComments()}
+
+            {/* {commentsVisible &&
                 (comments ? (
                     <div className="comments-block">
                         {comments?.comments.map((comment) => (
@@ -36,7 +56,7 @@ const PostCard = ({ post, fetchComments, navigateToUser }) => {
                     </div>
                 ) : (
                     <Spinner animation="border" variant="primary" />
-                ))}
+                ))} */}
         </div>
     );
 };

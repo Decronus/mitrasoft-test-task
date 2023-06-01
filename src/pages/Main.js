@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import PostCard from "../components/post-card/PostCard";
 import { Spinner, Form, Pagination, InputGroup, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { XLg } from "react-bootstrap-icons";
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -24,6 +25,11 @@ const Main = () => {
         if (event.key === "Enter") {
             setSearchQuery(searchInputRef.current.value);
         }
+    };
+
+    const clearSearch = () => {
+        setSearchQuery("");
+        searchInputRef.current.value = "";
     };
 
     const computePostsFunc = () => {
@@ -62,6 +68,10 @@ const Main = () => {
         const endIndex = startIndex + itemsPerPage;
         const postsToRender = computedPosts.slice(startIndex, endIndex);
 
+        if (!postsToRender.length) {
+            return <p>Посты не найдены</p>;
+        }
+
         return postsToRender.map((post) => (
             <PostCard
                 key={post.id}
@@ -84,8 +94,12 @@ const Main = () => {
                         onKeyUp={onPressEnterSearch}
                         ref={searchInputRef}
                     />
+
+                    <Button variant="outline-secondary" onClick={clearSearch}>
+                        X
+                    </Button>
                     <Button
-                        variant="outline-secondary"
+                        variant="primary"
                         id="button-addon"
                         onClick={() => setSearchQuery(searchInputRef.current.value)}
                     >
