@@ -1,4 +1,12 @@
-import { FETCH_POSTS, FETCH_COMMENTS, FETCH_USER, SET_POSTS, SET_COMMENTS, SET_USER } from "../types/main";
+import {
+    FETCH_POSTS,
+    FETCH_COMMENTS,
+    FETCH_USER,
+    SET_POSTS,
+    SET_COMMENTS,
+    SET_USER,
+    SET_POSTS_ERROR,
+} from "../types/main";
 
 export const fetchPostsCreator = () => ({
     type: FETCH_POSTS,

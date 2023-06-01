@@ -1,6 +1,7 @@
 import { takeEvery, put, call, all, takeLeading } from "redux-saga/effects";
 import { fetchPosts, fetchPostComments, fetchUser } from "../../api/api";
 import { setPostsCreator, setCommentsCreator, setUserCreator } from "../actions/creators/main";
+import { setPostsErrorCreator } from "../actions/creators/errors";
 import { FETCH_POSTS, FETCH_COMMENTS, FETCH_USER } from "../actions/types/main";
 
 const delay = (ms) =>
@@ -9,9 +10,13 @@ const delay = (ms) =>
     });
 
 function* workerPosts() {
-    yield delay(500);
-    const posts = yield call(fetchPosts);
-    yield put(setPostsCreator(posts.data));
+    try {
+        yield delay(500);
+        const posts = yield call(fetchPosts);
+        yield put(setPostsCreator(posts.data));
+    } catch {
+        yield put(setPostsErrorCreator());
+    }
 }
 
 function* watcherPosts() {
