@@ -26,6 +26,25 @@ const User = () => {
         dispatch(fetchUserCreator({ id: userId }));
     }, [userId]);
 
+    const renderUserPosts = () => {
+        if (!userPosts.length) {
+            return <p>Посты не найдены</p>;
+        }
+
+        return userPosts.length ? (
+            userPosts.map((post) => (
+                <PostCard
+                    key={post.id}
+                    post={post}
+                    navigateToUser={() => navigate(`/user/${post.userId}`)}
+                    fetchComments={() => dispatch(fetchCommentsCreator({ id: post.id }))}
+                />
+            ))
+        ) : (
+            <Spinner animation="border" variant="primary" />
+        );
+    };
+
     return (
         <div className="user-page">
             <Button type="primary" style={{ marginBottom: "2rem" }} onClick={() => navigate("/")}>
@@ -36,18 +55,8 @@ const User = () => {
             <UserCard user={user} />
             <hr style={{ marginBottom: "4rem" }} />
             <h3 className="h3-title">Посты пользователя</h3>
-            {userPosts.length ? (
-                userPosts.map((post) => (
-                    <PostCard
-                        key={post.id}
-                        post={post}
-                        navigateToUser={() => navigate(`/user/${post.userId}`)}
-                        fetchComments={() => dispatch(fetchCommentsCreator({ id: post.id }))}
-                    />
-                ))
-            ) : (
-                <Spinner animation="border" variant="primary" />
-            )}
+
+            {renderUserPosts()}
         </div>
     );
 };

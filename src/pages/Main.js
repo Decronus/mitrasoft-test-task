@@ -1,11 +1,10 @@
 import "./style.css";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsCreator, fetchCommentsCreator } from "../store/actions/creators/main";
-import { useEffect, useRef, useState } from "react";
 import PostCard from "../components/post-card/PostCard";
 import { Spinner, Form, Pagination, InputGroup, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { XLg } from "react-bootstrap-icons";
 
 const Main = () => {
     const dispatch = useDispatch();
