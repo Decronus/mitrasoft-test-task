@@ -1,7 +1,7 @@
 import { SET_POSTS, SET_COMMENTS } from "../actions/types/main";
 
 const initialState = {
-    posts: null,
+    posts: [],
 };
 
 export default function mainReducer(state = initialState, { type, payload }) {
@@ -14,15 +14,18 @@ export default function mainReducer(state = initialState, { type, payload }) {
         }
         case SET_COMMENTS: {
             const { id, comments } = payload;
-            const newPosts = state.posts.map((post) => {
+            const updatedPosts = state.posts.map((post) => {
                 if (post.id === id) {
-                    return (post.comments = comments);
+                    return {
+                        ...post,
+                        comments: comments,
+                    };
                 }
+                return post;
             });
-
             return {
                 ...state,
-                posts: newPosts,
+                posts: updatedPosts,
             };
         }
         default:

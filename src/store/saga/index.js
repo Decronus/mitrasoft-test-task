@@ -19,9 +19,8 @@ function* watcherPosts() {
 
 function* workerComments({ payload }) {
     const { id } = payload;
-    const comments = yield call(fetchPostComments, id);
+    const { data: comments } = yield call(fetchPostComments, id);
     const commentsPayload = { id, comments };
-    console.log("commentsPayload", commentsPayload);
     yield put(setCommentsCreator(commentsPayload));
 }
 

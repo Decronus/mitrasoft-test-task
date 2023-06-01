@@ -5,11 +5,11 @@ import rootSaga from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({ mainReducer });
+// const rootReducer = combineReducers({ mainReducer });
 
 export const store = configureStore({
     reducer: {
-        rootReducer: rootReducer,
+        mainReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
