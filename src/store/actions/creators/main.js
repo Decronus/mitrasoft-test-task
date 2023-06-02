@@ -4,27 +4,27 @@ export const fetchPostsCreator = () => ({
     type: FETCH_POSTS,
 });
 
-export const setPostsCreator = (payload) => ({
+export const setPostsCreator = (postsArray) => ({
     type: SET_POSTS,
-    payload,
+    payload: postsArray,
 });
 
-export const fetchCommentsCreator = (payload) => ({
+export const fetchCommentsCreator = (idObj) => ({
     type: FETCH_COMMENTS,
-    payload,
+    payload: idObj,
 });
 
-export const setCommentsCreator = (payload) => ({
+export const setCommentsCreator = (commentsObj) => ({
     type: SET_COMMENTS,
-    payload,
+    payload: commentsObj,
 });
 
-export const fetchUserCreator = (payload) => ({
+export const fetchUserCreator = (userIdObj) => ({
     type: FETCH_USER,
-    payload,
+    payload: userIdObj,
 });
 
-export const setUserCreator = (payload) => ({
+export const setUserCreator = (userObj) => ({
     type: SET_USER,
-    payload,
+    payload: userObj,
 });

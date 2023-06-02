@@ -1,4 +1,4 @@
-import { takeEvery, put, call, all, takeLeading } from "redux-saga/effects";
+import { takeEvery, put, call, all } from "redux-saga/effects";
 import { fetchPosts, fetchPostComments, fetchUser } from "../../api/api";
 import { setPostsCreator, setCommentsCreator, setUserCreator } from "../actions/creators/main";
 import { setPostsErrorCreator, setCommentsErrorCreator, setUserErrorCreator } from "../actions/creators/errors";
@@ -38,7 +38,7 @@ function* workerComments({ payload }) {
 }
 
 function* watcherComments() {
-    yield takeLeading(FETCH_COMMENTS, workerComments);
+    yield takeEvery(FETCH_COMMENTS, workerComments);
 }
 
 function* workerUser({ payload }) {
